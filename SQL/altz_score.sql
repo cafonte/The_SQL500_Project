@@ -1,5 +1,5 @@
 -- Author: Chase Fonte
--- Last Updated: 10/13/2023
+-- Last Updated: 10/16/2023
 
 with altz_gather as (
         select
@@ -11,9 +11,12 @@ with altz_gather as (
             inc.ebit/nullif(bal.total_assets,0) as c,
             cur.marketcap/nullif(bal.current_liabilities,0) as d,
             inc.total_revenue/nullif(bal.total_assets,0) as e
-    from balance_sheet bal
-        inner join income_sheet inc on bal.symbol = inc.symbol
-        inner join equity_info cur on bal.symbol = cur.symbol
+    from (select max(last_updated), symbol, working_capital, total_assets, retained_earnings, current_liabilities from balance_sheet
+            group by symbol, working_capital, total_assets, retained_earnings, current_liabilities) as bal
+        inner join (select max(last_updated), symbol, ebit, total_revenue from income_sheet
+                        group by symbol, ebit, total_revenue) as inc on bal.symbol = inc.symbol
+        inner join (select max(last_updated) as last_updated, symbol, shortname, marketcap from equity_info
+                        group by symbol, shortname, marketcap) as cur on bal.symbol = cur.symbol
     where cur.last_updated = (select max(last_updated) from equity_info)
     ),
 altz_build as (
@@ -42,4 +45,5 @@ select
     last_updated
 
 from altz_build
+where alt_z > 0 --remove filter to show null companies
 order by alt_z desc

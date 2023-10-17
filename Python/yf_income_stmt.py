@@ -1,5 +1,5 @@
 # Author: Chase Fonte
-# Last Updated: 10/16/2023
+# Last Updated: 10/17/2023
 
 import yfinance as yf
 import pandas as pd
@@ -14,7 +14,7 @@ sp500source = finsymbols.get_sp500_symbols()
 sp500 = [s['symbol'].replace('\n','') for s in sp500source] # Clean wiki output for loop
 print("S&P500 List Acquired..")
 # Execute a SQL query and load the results into a DataFrame
-db_df = pd.read_sql_query('SELECT symbol, last_updated FROM "income_sheet"', con=engine)
+db_df = pd.read_sql_query('SELECT symbol, max(last_updated) FROM "income_sheet" group by symbol', con=engine)
 print("DB Cashflow Acquired.."+"\n")
 tickercount = 0
 num_skipped = 0

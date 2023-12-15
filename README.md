@@ -4,7 +4,7 @@ Personal project that holds the Balance, Income, Cashflow and Current Equity Inf
 
 Ongoing models/financial strength tests can then be performed against all companies at once where data is available.
 
-![SQL500 Diagram-6](https://github.com/cafonte/yfinance_to_database/assets/109887258/e50d2f31-ab97-4ba0-8b07-ded51dc89df0)
+![SQL500 Diagram-7](https://github.com/cafonte/The_SQL500_Project/assets/109887258/5f7379be-1fb5-4423-87e8-d4e2b2badaeb)
 
 <img width="728" alt="SQL500 Visualized" src="https://github.com/cafonte/yfinance_to_database/assets/109887258/06c92528-d763-4d92-87fb-26e9a84294fe">
 
